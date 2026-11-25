@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>You’ve been croissanted!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FFD23F;        /* beurre */
+    --ink: #3B1F0E;       /* chocolat */
+    --crust: #B85C1A;     /* croûte dorée */
+    --paper: #FFF7DC;     /* mie */
+    --line: #3B1F0E;
+    color-scheme: light;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #2A160A;
+      --ink: #FFD23F;
+      --crust: #F2A04B;
+      --paper: #3B1F0E;
+      --line: #FFD23F;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #2A160A;
+    --ink: #FFD23F;
+    --crust: #F2A04B;
+    --paper: #3B1F0E;
+    --line: #FFD23F;
+    color-scheme: dark;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); height: 100%; }
+  body {
+    margin: 0;
+    min-height: 100%;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Bricolage Grotesque", system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 1.125rem;
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+  main {
+    max-width: 34rem;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+  .stamp {
+    font-size: clamp(6rem, 32vw, 10rem);
+    line-height: 1;
+    display: block;
+    transform-origin: 50% 60%;
+    animation: thud 700ms cubic-bezier(.2,1.6,.4,1) both;
+    user-select: none;
+  }
+  @keyframes thud {
+    0%   { transform: translateY(-60vh) rotate(-40deg) scale(.6); }
+    100% { transform: translateY(0) rotate(-12deg) scale(1); }
+  }
+  h1 {
+    font-family: "Bagel Fat One", "Arial Rounded MT Bold", "Trebuchet MS", sans-serif;
+    font-weight: 400;
+    font-size: clamp(2.75rem, 13vw, 4.5rem);
+    line-height: .95;
+    letter-spacing: -.01em;
+    margin: 0;
+  }
+  .lede {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0;
+    max-width: 28ch;
+  }
+  .ticket {
+    background: var(--paper);
+    border: 3px solid var(--line);
+    border-radius: 18px 18px 4px 18px;
+    padding: 1.25rem 1.35rem;
+    box-shadow: 6px 6px 0 var(--line);
+  }
+  .ticket h2 {
+    font-family: "Bagel Fat One", "Arial Rounded MT Bold", "Trebuchet MS", sans-serif;
+    font-weight: 400;
+    font-size: 1.5rem;
+    margin: 0 0 .5rem;
+    color: var(--crust);
+  }
+  .ticket ol { margin: 0; padding-left: 1.3rem; }
+  .ticket li + li { margin-top: .4rem; }
+  .ticket li::marker { font-weight: 600; color: var(--crust); }
+  button {
+    font: inherit;
+    font-family: "Bagel Fat One", "Arial Rounded MT Bold", "Trebuchet MS", sans-serif;
+    font-size: 1.35rem;
+    color: var(--bg);
+    background: var(--ink);
+    border: none;
+    border-radius: 999px;
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: transform 120ms ease;
+  }
+  button:active { transform: scale(.96); }
+  button:focus-visible { outline: 3px solid var(--crust); outline-offset: 4px; }
+  button[disabled] { cursor: default; }
+  .verdict {
+    margin: 0;
+    font-weight: 600;
+    min-height: 1.5em;
+  }
+  .small { font-size: .95rem; opacity: .8; margin: 0; }
+
+  .rain { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 20; }
+  .rain span {
+    position: absolute;
+    top: -3rem;
+    font-size: 2.2rem;
+    animation: fall linear forwards;
+  }
+  @keyframes fall {
+    to { transform: translateY(115vh) rotate(var(--spin)); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .stamp { animation: none; transform: rotate(-12deg); }
+    .rain { display: none; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <span class="stamp" aria-hidden="true">🥐</span>
+  <h1>You’ve been croissanted.</h1>
+  <p class="lede">You scanned the QR code. Too late, the deal is sealed.</p>
+
+  <section class="ticket" aria-labelledby="regles">
+    <h2 id="regles">What happens now</h2>
+    <ol>
+      <li>Tomorrow morning, you’re bringing pastries for the whole team.</li>
+      <li>Croissants, pains au chocolat, chocolatines: we don’t judge your vocabulary, only your quantities.</li>
+      <li>Any attempt to escape will cost you a double round.</li>
+    </ol>
+  </section>
+
+  <button id="accept" type="button">I accept my fate</button>
+  <p class="verdict" id="verdict" aria-live="polite"></p>
+  <p class="small">Next time, beware of QR codes left on your desk.</p>
+</main>
+<div class="rain" id="rain" aria-hidden="true"></div>
+
+<script>
+  const btn = document.getElementById('accept');
+  const verdict = document.getElementById('verdict');
+  const rain = document.getElementById('rain');
+  const pieces = ['🥐', '🥐', '🥐', '🍫', '☕'];
+
+  btn.addEventListener('click', () => {
+    btn.disabled = true;
+    btn.textContent = 'Fate accepted';
+    verdict.textContent = 'Thank you for your generosity. The team expects you at 9 am sharp.';
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    for (let i = 0; i < 60; i++) {
+      const s = document.createElement('span');
+      s.textContent = pieces[Math.floor(Math.random() * pieces.length)];
+      s.style.left = Math.random() * 100 + 'vw';
+      s.style.animationDuration = (2.2 + Math.random() * 2.5) + 's';
+      s.style.animationDelay = (Math.random() * 1.5) + 's';
+      s.style.setProperty('--spin', (Math.random() * 720 - 360) + 'deg');
+      rain.appendChild(s);
+    }
+    setTimeout(() => { rain.innerHTML = ''; }, 6500);
+  });
+</script>
+</body>
+</html>
